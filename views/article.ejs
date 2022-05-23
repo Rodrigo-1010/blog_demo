@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Article</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script
+      src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Google fonts-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <%- include('partials/nav.ejs') %>
+    <!-- Page Header-->
+    <header class="masthead" style="background-image: url(<%=article.image%>)">
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="post-heading">
+              <h1 class=""><%= article.title %></h1>
+
+              <span class="meta">
+                Posted by <%= article.user.firstname + " "+
+                article.user.lastname %> <%= " Posted on: " +
+                article.createdAt%>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Post Content-->
+    <article class="mb-4">
+      <div class="container">
+        <p><%= article.content %></p>
+        <a href="#!"
+          ><img
+            class="img-fluid d-block mx-auto"
+            src="<%= article.image %> "
+            alt="..."
+        /></a>
+      </div>
+    </article>
+    <hr class="my-4" />
+    <div class="d-flex flex-column justify-content-center">
+      <div class="container bg-light p-4 rounded-3 shadow mb-4">
+        <form
+          class="mb-4"
+          method="post"
+          action="<%=`/article/comment/${article.id}` %> "
+        >
+          <input
+            type="text"
+            value="<%= article.id %>"
+            name="articleId"
+            style="display: none"
+          />
+          <textarea
+            name="commentContent"
+            class="form-control form-text"
+            rows="3"
+            placeholder="Join the discussion and leave a comment!"
+          ></textarea>
+          <button
+            type="submit"
+            class="btn btn-primary mt-2 rounded form-control"
+          >
+            Submit
+          </button>
+          <hr />
+        </form>
+        <h3>Comments:</h3>
+        <hr />
+        <% for (const comment of comments) {%>
+        <div>
+          <h4><%= comment.user.firstname + " "+ comment.user.lastname %></h4>
+          <p><%=comment.content %></p>
+          <p
+            style="font-size: 1rem; font-weight: 200; color: rgb(102, 102, 102)"
+          >
+            Posted on: <%= String(comment.createdAt).substring(0,15) %>
+          </p>
+          <hr />
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <%- include('partials/footer.ejs') %>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
