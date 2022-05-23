@@ -12,7 +12,7 @@ async function findAll(req, res) {
   res.render("home", { articles });
 }
 
-// find one by ID
+//show article by id
 async function showById(req, res) {
   const article = await Article.findOne({
     include: User,
@@ -30,7 +30,7 @@ async function showById(req, res) {
     order: [["createdAt", "DESC"]],
   });
   if (article === null) {
-    return "device not found";
+    return "not found";
   }
   res.render("article", { article, comments });
 }
@@ -86,7 +86,7 @@ async function store(req, res) {
 
     //REDIRECT DEPENDING ON ROLE
     if (req.user.role === "admin") {
-      res.redirect("/admin");
+      res.redirect("/admin/dashboard");
     } else if (req.user.role === "writer") {
       res.redirect("/writer/dashboard");
     } else if (req.user.role === "editor") {

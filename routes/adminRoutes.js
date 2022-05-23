@@ -15,7 +15,7 @@ adminRouter.get("/dashboard", articleController.index);
 adminRouter.get("/create", articleController.create);
 
 //Agregar artículo nuevo
-adminRouter.post("/", articleController.store);
+adminRouter.post("/create", articleController.store);
 
 //Get del artículo a editar
 adminRouter.get("/edit/:id", articleController.edit);

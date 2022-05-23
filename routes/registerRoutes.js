@@ -1,30 +1,56 @@
 const express = require("express");
-const registerRouter = express.Router();
+const router = express.Router();
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 
-registerRouter.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.render("register", { errorMessage: "" });
 });
 
-registerRouter.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
+  const { firstname, lastname, email, password } = req.body;
+  let errors = [];
+
+  //Check if email already exists in DB
   const user = await User.findOne({
     where: { email: req.body.email },
   });
-  console.log(user);
   if (user !== null) {
-    return res.render("register", { errorMessage: "mail already register" });
+    errors.push({ msg: "Email already registered." });
+    return res.render("register", {
+      errors,
+      firstname,
+      lastname,
+      email,
+      password,
+    });
   }
-  //Hasheando las password antes de crear el nuevo usuario
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  //Creando nuevo usuario con los datos ingresados por el usuario en el form
-  const newUser = await User.create({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    password: hashedPassword,
-  });
-  res.redirect("/login");
+
+  //Check required fields
+  if (!firstname || !lastname || !email || !password) {
+    errors.push({ msg: "Please fill in all fields." });
+  }
+
+  if (errors.length > 0) {
+    res.render("register", {
+      errors,
+      firstname,
+      lastname,
+      email,
+      password,
+    });
+  } else {
+    //Hashing pass before creating new user
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    //Create new user in DB with form data
+    const newUser = await User.create({
+      firstname,
+      lastname,
+      email,
+      password: hashedPassword,
+    });
+    res.redirect("/login");
+  }
 });
 
-module.exports = registerRouter;
+module.exports = router;

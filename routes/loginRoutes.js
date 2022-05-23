@@ -1,13 +1,13 @@
 const express = require("express");
-const loginRouter = express.Router();
+const router = express.Router();
 const passport = require("passport");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
-loginRouter.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.render("login");
 });
 
-loginRouter.post(
+router.post(
   "/",
   passport.authenticate("local", {
     successRedirect: "/",
@@ -16,9 +16,9 @@ loginRouter.post(
 );
 
 //LOGOUT
-loginRouter.get("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   req.logOut();
   res.redirect("/");
 });
 
-module.exports = loginRouter;
+module.exports = router;

@@ -27,75 +27,61 @@
       type="text/css"
     />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../css/styles.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/4/journal/bootstrap.min.css"
+    />
   </head>
   <body>
     <%- include('partials/nav.ejs') %>
-
-    <!-- Page Header-->
-    <header
-      class="masthead"
-      style="
-        background-image: url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80');
-      "
-    >
-      <div class="container position-relative px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-          <div class="col-md-10 col-lg-8 col-xl-7">
-            <div class="site-heading">
-              <h1 class="">DEV NEWS</h1>
-
-              <span class="subheading">Developer news!</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
     <!-- Main Content-->
-
-    <!-- <div class="col-sm-6 my-4  d-flex justify-content-center">  -->
-    <!-- <div class="card">
-         <div class="card-body p-5"> -->
-    <div class="container px-4 px-lg-5">
-      <div class="row gx-4 gx-lg-5">
-        <!-- <div class="col-md-10 col-lg-8 col-xl-7"> 
-                <% for(const article of articles){%>
-                <!- Post preview-->
-        <div class="post-preview justify-content-center">
-          <h2 class="post-title"><%= article.title %></h2>
-          <p class="post-subtitle"><%= article.content %></p>
-          <p class="post-meta">
-            Posted by
-            <a href="#!">
-              <%= !article.userId ? "desconocido" : `${article.user.firstname}`
-              %>
-            </a>
-            <%=String(article.createdAt).substring(0,15)%>
-          </p>
+    <div class="container mt-4">
+      <div class="row">
+        <% for(const article of articles){%>
+        <div class="col-4">
           <a
-            style="color: white; border-radius: 15px"
-            href="/article/<%=article.id%>"
-            class="text-decoration-none btn btn-primary shadow"
+            href="/article/<%= article.id %>"
+            class="text-decoration-none"
+            style="color: inherit"
           >
-            Read more
+            <div class="card mb-3">
+              <h3 class="card-header"><%= article.title %></h3>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="d-block user-select-none"
+                width="100%"
+                height="200"
+                aria-label="Placeholder: Image cap"
+                focusable="false"
+                role="img"
+                preserveAspectRatio="xMidYMid slice"
+                viewBox="0 0 318 180"
+                style="font-size: 1.125rem; text-anchor: middle"
+              >
+                <rect width="100%" height="100%" fill="#868e96"></rect>
+                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">
+                  <%= article.image %>
+                </text>
+              </svg>
+              <div class="card-body">
+                <p class="card-text"><%= article.content %></p>
+              </div>
+              <div class="card-footer text-muted"><%= article.createdAt %></div>
+            </div>
           </a>
         </div>
-        <!-- Divider-->
-        <hr class="my-4" />
         <% } %>
-
-        <!-- Pager-->
-        <div class="d-flex justify-content-end mb-4">
-          <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
-        </div>
       </div>
+    </div>
+
+    <!-- Pager-->
+    <div class="d-flex justify-content-end mb-4">
+      <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
     </div>
 
     <%- include('partials/footer.ejs') %>
 
-    <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
   </body>
 </html>
