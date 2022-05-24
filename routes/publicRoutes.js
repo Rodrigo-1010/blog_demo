@@ -1,5 +1,4 @@
 const express = require("express");
-const { resolveContent } = require("nodemailer/lib/shared");
 const publicRouter = express.Router();
 const articleController = require("../controllers/articleController");
 const passport = require("passport");
@@ -19,8 +18,5 @@ publicRouter.post("/article/comment/:id", isAuthenticated, (req, res) => {
   });
   res.redirect(`/article/${req.body.articleId}`);
 });
-
-// ruta api
-publicRouter.get("/api", articleController.api);
 
 module.exports = publicRouter;

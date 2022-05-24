@@ -12,7 +12,7 @@ async function findAll(req, res) {
   res.render("home", { articles });
 }
 
-//show article by id
+//Show article by id
 async function showById(req, res) {
   const article = await Article.findOne({
     include: User,
@@ -21,7 +21,7 @@ async function showById(req, res) {
     },
   });
 
-  // bring comments
+  // look for comments
   const comments = await Comment.findAll({
     include: User,
     where: {
@@ -29,10 +29,13 @@ async function showById(req, res) {
     },
     order: [["createdAt", "DESC"]],
   });
-  if (article === null) {
-    return "not found";
+  console.log(comments);
+  //Checking if comments for this specific article exist
+  if (comments.length > 0) {
+    res.render("article", { article, comments });
+  } else {
+    res.render("article", { article });
   }
-  res.render("article", { article, comments });
 }
 
 //role-dependant-dashboard-listing
@@ -129,16 +132,6 @@ async function destroy(req, res) {
   res.redirect(`/${req.user.role}/dashboard`);
 }
 
-//API
-async function api(req, res) {
-  const articles = await Articles.findAll({
-    include: User,
-    raw: true,
-    order: [["createdAt", "DESC"]],
-  });
-  res.json(articles);
-}
-
 module.exports = {
   findAll,
   showById,
@@ -148,5 +141,4 @@ module.exports = {
   update,
   destroy,
   index,
-  api,
 };

@@ -6,7 +6,7 @@ faker.locale = "es";
 module.exports = async () => {
   const comments = [];
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 50; i++) {
     comments.push({
       content: faker.lorem.paragraph(1),
       userId: Math.random() * (10 - 1) + 1,

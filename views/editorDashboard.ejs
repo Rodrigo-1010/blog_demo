@@ -77,7 +77,7 @@
               >
                 Edit
               </a>
-              <% if (article.userId === reqUserId) { %>
+
               <form
                 action="/editor/<%=article.id%>?_method=DELETE"
                 method="POST"
@@ -86,7 +86,6 @@
                   Delete
                 </button>
               </form>
-              <% } %>
             </td>
           </tr>
           <%}%>
